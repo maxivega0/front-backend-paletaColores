@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 
 // eslint-disable-next-line react/prop-types
 const ItemColor = ({ cargar, setCargar }) => {
-  const [colorId, setColorId] = useState("");
+  const [colorId, setColorId] = useState({});
 
   const [colores, setColores] = useState([]);
   const [show, setShow] = useState(false);
@@ -27,6 +27,7 @@ const ItemColor = ({ cargar, setCargar }) => {
       if (respuesta) {
         setColores(respuesta);
         setCargar(false);
+        handleClose();
       } else {
         Swal.fire(
           "Error",
@@ -85,12 +86,11 @@ const ItemColor = ({ cargar, setCargar }) => {
   } = useForm();
 
   const onSubmit = (colorEditado) => {
-    console.log(colorEditado);
-    editarColor(colorEditado, colorId).then((respuesta) => {
+    editarColor(colorEditado, colorId._id).then((respuesta) => {
       if (respuesta.status === 200) {
         Swal.fire(
-          "Producto editado correctamente!",
-          `El producto ${colorEditado.color} sufrió cambios`,
+          "color editado correctamente!",
+          `El color ${colorEditado.color} sufrió cambios`,
           "success"
         );
         reset();
@@ -98,14 +98,12 @@ const ItemColor = ({ cargar, setCargar }) => {
       } else {
         Swal.fire(
           "Ocurrio un error!",
-          `El producto ${colorEditado.color} no pudo ser editado`,
+          `El color ${colorEditado.color} no pudo ser editado`,
           "error"
         );
       }
     });
-    // then implica lo siguiente: yo ejecutare una funcion, una vez que se ejecute iniciar sesion, espera que se ejecute y entonces, realiza lo siguiente
-    // respuesta es una variable inventada que va a contener el return de "inciarSesion"
-    Swal.fire("Producto editado correctamente!", "", "success");
+    Swal.fire("Color editado correctamente!", "", "success");
     reset();
   };
 
@@ -135,8 +133,7 @@ const ItemColor = ({ cargar, setCargar }) => {
                 variant="warning"
                 onClick={() => {
                   handleShow();
-                  setColorId(color._id);
-                  console.log(colorId);
+                  setColorId(color);
                 }}
               >
                 Editar
@@ -154,12 +151,12 @@ const ItemColor = ({ cargar, setCargar }) => {
           {" "}
           <Form onSubmit={handleSubmit(onSubmit)} className="bloqueFormulario">
             <Form.Group className="mb-3 d-flex flex-column" controlId="color">
-              <Form.Label>Color*</Form.Label>
+              <Form.Label>El color actual es: {colorId.color}</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Escriba el nuevo color"
                 {...register("color", {
-                  required: "El nombre del producto es obligatorio",
+                  required: "El nombre del color es obligatorio",
                   minLength: {
                     value: 2,
                     message: "La cantidad minima de caracteres es de 2 digitos",
@@ -176,7 +173,11 @@ const ItemColor = ({ cargar, setCargar }) => {
               </Form.Text>
             </Form.Group>
             <Container className="my-3 text-center">
-              <Button variant="secondary" onClick={handleClose}>
+              <Button
+                variant="secondary"
+                onClick={handleClose}
+                className="mx-5"
+              >
                 Cerrar
               </Button>
               <Button variant="primary" type="submit">

@@ -16,12 +16,11 @@ const FormularioColor = () => {
   } = useForm();
 
   const onSubmit = (nuevoColor) => {
-    console.log(nuevoColor);
     crearColor(nuevoColor).then((respuesta) => {
       if (respuesta.status === 201) {
         Swal.fire(
-          "Producto creado correctamente!",
-          `El producto ${nuevoColor.color} fue creado correctamente`,
+          "Color creado correctamente!",
+          `El color ${nuevoColor.color} fue creado correctamente`,
           "success"
         );
         reset();
@@ -29,19 +28,13 @@ const FormularioColor = () => {
       } else {
         Swal.fire(
           "Ocurrio un error!",
-          `El producto ${nuevoColor.color} no pudo ser creado`,
+          `El color ${nuevoColor.color} no pudo ser creado`,
           "error"
         );
       }
     });
     reset();
   };
-
-  // const borrarColor = (nombreColor) =>{
-  //   let copiaColores = colores.filter((itemColor) => itemColor !== nombreColor);
-  //   setColores(copiaColores);
-  // }
-
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)} className="bloqueFormulario">
@@ -49,9 +42,9 @@ const FormularioColor = () => {
           <Form.Label>Color*</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Ej: alguna descripcion"
+            placeholder="Ingrese un nuevo color"
             {...register("color", {
-              required: "El nombre del producto es obligatorio",
+              required: "El nombre del color es obligatorio",
               minLength: {
                 value: 2,
                 message: "La cantidad minima de caracteres es de 2 digitos",
