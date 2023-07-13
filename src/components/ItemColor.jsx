@@ -15,7 +15,6 @@ const ItemColor = ({colores, borrarColor }) => {
             <Card.Footer className='justify-content-'>
               <Button variant="danger mx-4" onClick={() => borrarColor(color)}>Borrar</Button>
               <Button variant="warning" onClick={() => borrarColor(color)}>Editar</Button>
-
             </Card.Footer>
           </Card>
         );
