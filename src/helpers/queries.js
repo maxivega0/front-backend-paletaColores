@@ -1,5 +1,5 @@
 const URL_colores = import.meta.env.VITE_API_COLOR
-// direccion api: VITE_API_Color=http://localhost:4005/apiColores/Colores 
+// direccion api: VITE_API_Color=http://localhost:4010/apiColores/Colores 
 
 export const crearColor = async (color) => {
     try {
